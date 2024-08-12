@@ -1,10 +1,5 @@
-
-
-let firstCard = 5
-let secondCard = 15
-
 let hasBlackjack = false
-let isInGame = true
+let isInGame = false
 let cards = []
 
 let message = ""
@@ -51,6 +46,7 @@ const getRandomIntInclusive = (min, max) => {
 
 const startGame = () => {
 
+    isInGame = true
     resetResultScreen()
 
     for (i = 0; i < 2; i++) {
@@ -62,6 +58,11 @@ const startGame = () => {
 }
 
 const drawCard = () => {
+
+    if (!isInGame || hasBlackjack) {
+        // return early if the player is bust or has blackjack
+        return
+    }
     console.log("drawing card")
 
     newCard = getRandomIntInclusive(2,11)
@@ -87,7 +88,7 @@ const checkWinLossBust = (result) => {
         message = `You've got ${result}, would you like to draw another card?`
     }
     else if (result > 21) {
-        message = `You've got ${result} and are bust`
+        message = `You've got ${result} and are bust\nPlease start a new game to continue playing`
         isInGame = false
     }
     else {
@@ -95,7 +96,3 @@ const checkWinLossBust = (result) => {
         hasBlackjack = true
     }
 }
-
-console.log(message)
-
-console.log(hasBlackjack)
